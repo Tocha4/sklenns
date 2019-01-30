@@ -8,7 +8,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.cluster import KMeans
 import tensorflow as tf
 
-model = MLPClassifier(hidden_layer_sizes=(100), activation="relu", solver="adam", 
+model = MLPClassifier(hidden_layer_sizes=(1000), activation="relu", solver="adam", 
                       alpha=0.001, batch_size="auto", learning_rate="adaptive", 
                       learning_rate_init=0.03, power_t=0.5, max_iter=100, shuffle=True, 
                       random_state=None, tol=0, verbose=True, warm_start=False, 
@@ -17,7 +17,8 @@ model = MLPClassifier(hidden_layer_sizes=(100), activation="relu", solver="adam"
                       epsilon=1e-08, n_iter_no_change=100)
 
 #%% LOAD DATA
-train_x = pd.read_csv("../../input/microsoft-malware-prediction/train_numeric.csv", nrows=10**6)
+train_x = pd.read_csv("../../input/microsoft-malware-prediction/train_numeric.csv", nrows=10**4)
+train_x = train_x.drop(["dpi","dpi_square","MegaPixels"], axis=1)
 train_x = train_x.dropna()
 train_x, test_x, train_y, test_y = train_test_split(train_x.drop(["HasDetections", "MachineIdentifier"], axis=1),train_x["HasDetections"])
 
